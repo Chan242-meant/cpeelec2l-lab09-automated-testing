@@ -26,7 +26,8 @@
     "testEnvironment": "node",
     "testMatch": [
       "**/tests/**/*.test.js"
-    ]
+    ],
+      "setupFiles": ["<rootDir>/tests/setup.js"]
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.10.0",
