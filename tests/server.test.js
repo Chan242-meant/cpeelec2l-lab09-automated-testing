@@ -252,6 +252,33 @@ describe("DELETE /tasks/:id", () => {
   });
 });
 
+describe("DELETE /tasks/:id - invalid id", () => {
+  it("returns 400 when the id is not a number", async () => {
+    // Arrange
+    const invalidId = "abc";
+
+    // Act
+    const res = await request(app).delete(`/tasks/${invalidId}`);
+
+    // Assert
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe("Validation failed");
+    expect(prisma.task.delete).not.toHaveBeenCalled();
+  });
+
+  it("returns 400 when the id is only partly numeric (12abc)", async () => {
+    // Arrange
+    const partlyNumericId = "12abc";
+
+    // Act
+    const res = await request(app).delete(`/tasks/${partlyNumericId}`);
+
+    // Assert
+    expect(res.status).toBe(400);
+    expect(prisma.task.delete).not.toHaveBeenCalled();
+  });
+});
+
 // ---------------------------------------------------------------------------
 // GET /users
 // ---------------------------------------------------------------------------

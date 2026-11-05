@@ -345,8 +345,8 @@ app.put("/tasks/:id", async (req, res) => {
  */
 app.delete("/tasks/:id", async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
+    const id = /^\d+$/.test(req.params.id) ? parseInt(req.params.id, 10) : NaN;
+if (isNaN(id)) {
       return res.status(400).json({
         error: "Validation failed",
         errors: ["Invalid task ID. ID must be an integer."],
